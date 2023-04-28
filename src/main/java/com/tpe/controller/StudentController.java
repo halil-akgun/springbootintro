@@ -77,7 +77,8 @@ public class StudentController {
     }
 
     // PAGEABLE
-    @GetMapping("/page") // http://localhost:8080/students/page?page=1&size=2&sort=name&direction=ASC
+    @GetMapping("/page") // http://localhost:8080/students/page?page=0&size=2&sort=name&direction=ASC
+//                                                          sayfa 0'dan baslar
     public ResponseEntity<Page<Student>> getAllWithPage(
             @RequestParam("page") int page, // kacinci sayfa gelsin?
             @RequestParam("size") int size, // sayfa basi kac urun
