@@ -19,7 +19,7 @@ spring:
     properties:
       '[hibernate.format_sql]': true
 
-logging:   #logging
+logging: # logging
   file:
     name: log/studentapp.log
   pattern:
@@ -28,6 +28,13 @@ logging:   #logging
     '[org.springframework.web]': WARN
     '[org.hibernate]': INFO
     '[com.tpe]': INFO
+
+management: # actuator
+  endpoints:
+    web:
+      exposure:
+        include: [ 'health', 'loggers', 'env', 'beans' ]
+
 
 
       # eski hali
