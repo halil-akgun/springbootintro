@@ -3,6 +3,8 @@ package com.tpe.controller;
 import com.tpe.domain.Student;
 import com.tpe.dto.StudentDTO;
 import com.tpe.service.StudentService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -21,22 +24,28 @@ import java.util.Map;
 @RequestMapping("/students")
 public class StudentController {
 
+    // LOGGER
+    Logger logger = LoggerFactory.getLogger(StudentController.class);
+
+
     @Autowired
     private StudentService studentService;
 
+    // GET ALL STUDENTS
     @GetMapping
     public ResponseEntity<List<Student>> getAll() { // return students + status code
         List<Student> students = studentService.getAll();
         return ResponseEntity.ok(students); // students + status code=200
     }
 
+    // CREATE A STUDENT
     @PostMapping // http://localhost:8080/students + POST + JSON   (gelen json'i @RequestBody ile maple)
     public ResponseEntity<Map<String, String>> createStudent(@Valid @RequestBody Student student) {
 //                                        @Valid: valid. islemi burada olur, sorun varsa repoya kadar gidilmez
         studentService.createStudent(student);
         Map<String, String> map = new HashMap<>();
         map.put("message", "Student is created successfully");
-        map.put("status", "true");
+        map.put("status", "true"); // zorunlu degil
         return new ResponseEntity<>(map, HttpStatus.CREATED);
     }
 
@@ -57,6 +66,7 @@ public class StudentController {
     // DELETE A STUDENT BY ID VIA PATHVARIABLE
     @DeleteMapping("/{id}") // http://localhost:8080/students/1
     public ResponseEntity<Map<String, String>> deleteStudent(@PathVariable("id") Long id) {
+//                                                          @PathVariable(): tek parametre ise id yazilmayabilir
         studentService.deleteStudent(id);
 
         Map<String, String> map = new HashMap<>();
@@ -96,6 +106,27 @@ public class StudentController {
     public ResponseEntity<List<Student>> getStudentByLastName(@RequestParam("lastName") String lastName) {
         List<Student> list = studentService.findStudent(lastName);
         return ResponseEntity.ok(list);
+    }
+
+    // GET ALL STUDENTS BY GRADE (JPQL - Java Persistence Query Language)
+    @GetMapping("/grade/{grade}") // http://localhost:8080/students/grade/100
+    public ResponseEntity<List<Student>> getStudentsEqualsGrade(@PathVariable("grade") Integer grade) {
+        List<Student> studentList = studentService.findAllEqualsGrade(grade);
+        return ResponseEntity.ok(studentList);
+    }
+
+    // DB'DEN DIREKT DTO ALMA (db'de dto olusacak)
+    @GetMapping("/query/dto") // http://localhost:8080/students/query/dto?id=1
+    public ResponseEntity<StudentDTO> getStudentDTO(@RequestParam("id") Long id) {
+        StudentDTO studentDTO = studentService.findStudentDTOById(id);
+        return ResponseEntity.ok(studentDTO);
+    }
+
+    // VIEW
+    @GetMapping("/welcome") // http://localhost:8080/students/welcome
+    public String welcome(HttpServletRequest request) { // HttpServletRequest: gelen request aliniyor
+        logger.warn("--------------- WELCOME {}", request.getServletPath()); // path {} icinde gozukecek
+        return "WELCOME";
     }
 
 }

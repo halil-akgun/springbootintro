@@ -1,0 +1,7 @@
+server.port=8081
+#run/modify options/Add JM options --> -Dspring.profiles.active=dev   ..-dev aktif oldu
+# her 2 properties'de ayni ozellik (mesela: server.port) varsa buradaki gecerli olur
+
+# diger properties yml'ye donusturuldugu icin bu dosyayi uzantisiz yaptim,
+# active=dev'i iptal ettim (conflict olmasin diye)
+# yml gorsellik iyi

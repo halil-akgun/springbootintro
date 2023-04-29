@@ -71,4 +71,13 @@ public class StudentService {
     public List<Student> findStudent(String lastName) {
         return studentRepository.findByLastName(lastName);
     }
+
+    public List<Student> findAllEqualsGrade(Integer grade) {
+        return studentRepository.findAllEqualsGrade(grade);
+    }
+
+    public StudentDTO findStudentDTOById(Long id) {
+        return studentRepository.findStudentDTOById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Student not found with id: " + id));
+    }
 }
