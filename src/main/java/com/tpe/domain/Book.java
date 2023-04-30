@@ -19,7 +19,7 @@ public class Book {
     @JsonProperty("bookName") // sadece JSON ciktilardaki key degeri degisti
     private String name;
 
-    @JsonIgnore // sonsuz donguyu engellemek icin (toString'deki student'i silmek gibi)
+    @JsonIgnore // stackOverFlow'u engellemek icin (toString'deki student'i silmek gibi)
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;

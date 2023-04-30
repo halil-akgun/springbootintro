@@ -1,5 +1,6 @@
 package com.tpe.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
@@ -40,6 +41,7 @@ public class Student {
     @Email(message = "provide valid email")
     private /*final*/ String email;
 
+    @JsonProperty("tel") // sadece JSON ciktilardaki key degeri degisti (yeni std create ederken tel yazmak gerekir)
     private /*final*/ String phoneNumber;
 
     @Setter(AccessLevel.NONE) // setId olmayacak

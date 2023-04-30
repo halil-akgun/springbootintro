@@ -24,7 +24,7 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findAllEqualsGrade(@Param("pGrade") Integer grade); // findByLastGrade de olabilir aslinda(query'ye gerek kalmaz)
 
     //SQL
-    @Query(value = "SELECT * FROM student s WHERE s.grade=:pGrade", nativeQuery = true)
+    @Query(value = "SELECT * FROM student s WHERE s.grade=:pGrade", nativeQuery = true)//nativeQuery:HQL/JPQL degil
     List<Student> findAllEqualsGradeWithSQL(@Param("pGrade") Integer grade);
 
     // JPQL - StudentDTO(s) = constructor - s: gelen record
