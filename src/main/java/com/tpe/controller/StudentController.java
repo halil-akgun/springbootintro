@@ -108,6 +108,12 @@ public class StudentController {
         return ResponseEntity.ok(list);
     }
 
+//    @GetMapping("/lname/{lastname}")
+//    public  ResponseEntity<List<Student>>  getStudentByLastName(@PathVariable("lastname") String lastName){
+//        List<Student> list= studentService.findStudent(lastName);
+//        return ResponseEntity.ok(list);
+//    }
+
     // GET ALL STUDENTS BY GRADE (JPQL - Java Persistence Query Language)
     @GetMapping("/grade/{grade}") // http://localhost:8080/students/grade/100
     public ResponseEntity<List<Student>> getStudentsEqualsGrade(@PathVariable("grade") Integer grade) {
