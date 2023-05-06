@@ -36,12 +36,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 antMatchers("/",
                 "index.html",
                 "/css/*",
-                "/js/*").permitAll(). // bu end-pointleri yetkili mi diye kontrol etme
+                "/js/*",
+                "/register").permitAll(). // bu end-pointleri yetkili mi diye kontrol etme
+//  alttaki 2 satir icin @EnableGlobalMethodSecurity(prePostEnabled = true) bunu iptal etmek gerekir once
+//                and(). // /students/** students ile baslayan tum requestlerde yetkili: admin
+//                authorizeRequests().antMatchers("/students/**").hasRole("ADMIN").
                 anyRequest(). // muaf tutulan end-pointler disinda gelen herhangi bir requesti
                 authenticated(). // yetkili mi diye kontrol et
                 and().
                 httpBasic(); // bunu yaparkende Basic Auth kullanilacagini belirtiyoruz
-
     }
 
     @Bean

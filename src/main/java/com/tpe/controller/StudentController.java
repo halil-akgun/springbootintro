@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +34,7 @@ public class StudentController {
 
     // GET ALL STUDENTS
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')") // bu methodu sadece adminler erisebilir (hasRole: ROLE_ otomatik tamamliyor)
     public ResponseEntity<List<Student>> getAll() { // return students + status code
         List<Student> students = studentService.getAll();
         return ResponseEntity.ok(students); // students + status code=200
@@ -40,6 +42,7 @@ public class StudentController {
 
     // CREATE A STUDENT
     @PostMapping // http://localhost:8080/students + POST + JSON   (gelen json'i @RequestBody ile maple)
+    @PreAuthorize("hasRole('ADMIN') or hasRole('STUDENT')")
     public ResponseEntity<Map<String, String>> createStudent(@Valid @RequestBody Student student) {
 //                                        @Valid: valid. islemi burada olur, sorun varsa repoya kadar gidilmez
         studentService.createStudent(student);

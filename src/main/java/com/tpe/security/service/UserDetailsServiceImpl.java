@@ -9,11 +9,13 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     // bu classda 1. amacim : Security katmanina User objelerimi verip UserDetails
@@ -45,6 +47,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     // olusturdugumuz rolleri security'nin istedigi data tipine (SimpleGrantedAuthority) ceviriyoruz
 
     private static List<SimpleGrantedAuthority> buildGrantedAuthority(final Set<Role> roles) {
+//   final sayesinde Set<Role> roles null ise bu method calismaz, NullPointerException firlatilir
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
 
         for (Role role : roles) { //                    getName() -> enum dondurur,  name() -> string

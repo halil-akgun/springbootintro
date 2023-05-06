@@ -18,7 +18,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     // Enumerated: name'e enum'dan atama yapilsin
     @Enumerated(EnumType.STRING) // db'ye index(0, 1) degil string olarak kaydet

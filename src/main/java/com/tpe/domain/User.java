@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -39,7 +40,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     @ManyToMany(fetch = FetchType.EAGER) // role bilgisi de gelsin diye eager
-    private Set<Role> role; // 2 tane ayni role eklenemesin diye list degil set
+    private Set<Role> role = new HashSet<>(); // 2 tane ayni role eklenemesin diye list degil set
 
     @JsonIgnore
     @OneToOne(mappedBy = "user")
